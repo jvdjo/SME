@@ -6,15 +6,15 @@ namespace SME.Controllers;
 [Route("[controller]")]
 public class FrequenciaController : ControllerBase
 {
-    [HttpGet]
-    public IActionResult Get()
+    [HttpPost]
+    public IActionResult Update()
     {
-        return Ok("gay");
+        return Ok();
     }
     
     [HttpGet]
-    public IActionResult Get()
+    public IActionResult GetFrequencia()
     {
-        return Ok("gay");
+        return Ok("123");
     }
 }
