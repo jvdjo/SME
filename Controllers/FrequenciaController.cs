@@ -1,4 +1,7 @@
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
+using SME.Models;
+using SME.Repository;
 
 namespace SME.Controllers;
 
@@ -6,10 +9,22 @@ namespace SME.Controllers;
 [Route("[controller]")]
 public class FrequenciaController : ControllerBase
 {
-    [HttpPost]
-    public IActionResult Update()
+    private readonly SmeDbContext _dbContext;
+
+    public FrequenciaController(SmeDbContext dbContext)
     {
-        return Ok();
+        _dbContext = dbContext;
+    }
+
+
+    [HttpPost]
+    public async Task<IActionResult> Create(Frequencia frequencia)
+    {
+        await _dbContext.Frequencias.AddAsync(frequencia);
+        var result = await _dbContext.SaveChangesAsync();
+        if(result > 0)
+            return Ok();
+        return BadRequest();
     }
     
     [HttpGet]
