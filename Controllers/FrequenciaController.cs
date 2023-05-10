@@ -20,6 +20,7 @@ public class FrequenciaController : ControllerBase
     [HttpPost]
     public async Task<IActionResult> Create(Frequencia frequencia)
     {
+        frequencia.Data = DateTime.Now;
         await _dbContext.Frequencias.AddAsync(frequencia);
         var result = await _dbContext.SaveChangesAsync();
         if(result > 0)
@@ -28,8 +29,9 @@ public class FrequenciaController : ControllerBase
     }
     
     [HttpGet]
-    public IActionResult GetFrequencia()
+    public async Task<IActionResult> GetFrequencia()
     {
-        return Ok("123");
+        var frequenciaAtual = await _dbContext.Frequencias.OrderByDescending(f => f.Data).FirstOrDefaultAsync();
+        return Ok(frequenciaAtual);
     }
 }
